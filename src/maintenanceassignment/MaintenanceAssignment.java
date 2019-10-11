@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+
 /**
  *
  * @author Leanne
@@ -54,15 +55,16 @@ public class MaintenanceAssignment {
     /**
      * @param args the command line arguments
      */
+    
     public static void main(String[] args) {
-        
-    
-    Record user = new Record();
-    user.writeToFile();
-    user.readFromFile();
-    
+//    Record user = new Record();
+//    user.writeToFile();
+//    user.readFromFile();
+//      display d = new display();
+//      d.printWelcome();
+//      d.printInstruction();
     }
-    
+
 }
 
 class Record{
@@ -70,7 +72,6 @@ class Record{
     String capName;
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyy/MM/dd HH:mm:ss");
     LocalDateTime now = LocalDateTime.now();
- 
 
     
     public String getName(){
@@ -78,17 +79,21 @@ class Record{
         Scanner input = new Scanner(System.in);
         String name = input.nextLine().toString();
         capName = name.substring(0,1).toUpperCase() + name.substring(1);
+        System.out.println("Your name: " + capName);
+        System.out.println("Your score: ");//+ include score
         return capName;
     }
     
     public void readFromFile(){
+        
+        System.out.println("Wanna see past records? press 'y'");
+        //if getch == y
         
         BufferedReader reader;
         
         try{
         reader = new BufferedReader(new FileReader("record.txt"));
         String line = reader.readLine();
-            System.out.println("Reading File...");
         while (line!=null){
             System.out.println(line);
             line = reader.readLine();
@@ -98,19 +103,17 @@ class Record{
             System.out.println("ERROR.");
             e.printStackTrace();
             System.exit(1);
-        }
+        }//else exit
     }
     
     public void writeToFile() {
-//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyy/MM/dd HH:mm:ss");
-//        LocalDateTime now = LocalDateTime.now();
+
         try {
             PrintWriter writer = new PrintWriter(new FileWriter("record.txt", true));
             writer.println("[" + dtf.format(now) + "]");
             writer.println("Your name: " + getName());
-            writer.println("Your score: ");
+            writer.println("Your score: "); //+ include score
             writer.close();
-            System.out.println("Name saved.");
         } catch(IOException e){
             System.out.println("ERROR.");
             e.printStackTrace();
