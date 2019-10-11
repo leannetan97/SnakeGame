@@ -86,7 +86,7 @@ class Record{
         BufferedReader reader;
         
         try{
-        reader = new BufferedReader(new FileReader("\\Users\\user\\Documents\\GitHub\\SnakeGame\\record.txt"));
+        reader = new BufferedReader(new FileReader("record.txt"));
         String line = reader.readLine();
             System.out.println("Reading File...");
         while (line!=null){
@@ -105,8 +105,10 @@ class Record{
 //        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyy/MM/dd HH:mm:ss");
 //        LocalDateTime now = LocalDateTime.now();
         try {
-            PrintWriter writer = new PrintWriter(new FileWriter("\\Users\\user\\Documents\\GitHub\\SnakeGame\\record.txt", true));
-            writer.println("[" + dtf.format(now) + "] Your name: " + getName());
+            PrintWriter writer = new PrintWriter(new FileWriter("record.txt", true));
+            writer.println("[" + dtf.format(now) + "]");
+            writer.println("Your name: " + getName());
+            writer.println("Your score: ");
             writer.close();
             System.out.println("Name saved.");
         } catch(IOException e){
