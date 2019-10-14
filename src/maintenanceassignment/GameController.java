@@ -7,6 +7,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -77,11 +78,17 @@ class Grid {
     public void printGrid(int life, int score) throws IOException, InterruptedException {
         CleanScreen();
         printLifeScore(life, score);
-        for (Node[] nodeList1 : nodeList) {
-            for (Node item : nodeList1) {
-                System.out.print(item.getElementIcon());
+        try {
+            BufferedWriter log = new BufferedWriter(new OutputStreamWriter(System.out));
+            for (Node[] nodeList1 : nodeList) {
+                for (Node item : nodeList1) {
+                    log.write(item.getElementIcon());
+                }
+                log.newLine();
             }
-            System.out.println("");
+            log.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -113,6 +120,7 @@ class Grid {
 
     public void printLifeScore(int life, int score) {
         System.out.println("Life: " + life + "\t\t\t Score: " + score);
+
     }
 }
 
@@ -169,7 +177,7 @@ class Food {
     private final Coordinate FOOD_COORDINATE;
 
     Food() {
-        this.FOOD_COORDINATE = new Coordinate(new Random().nextInt(GameController.BOR_WIDTH - 1) + 1, new Random().nextInt(GameController.BOR_HEIGHT - 1) + 1);
+        this.FOOD_COORDINATE = new Coordinate(new Random().nextInt(GameController.BOR_WIDTH - 2) + 1, new Random().nextInt(GameController.BOR_HEIGHT - 2) + 1);
     }
 
     public int getX() {
@@ -501,7 +509,7 @@ public class GameController extends JFrame {
                 gameOver = true;
             }
 
-            if(key != KeyEvent.VK_ESCAPE && key != KeyEvent.VK_DOWN  && key != KeyEvent.VK_UP && key != KeyEvent.VK_RIGHT && key != KeyEvent.VK_LEFT){
+            if (key != KeyEvent.VK_ESCAPE && key != KeyEvent.VK_DOWN && key != KeyEvent.VK_UP && key != KeyEvent.VK_RIGHT && key != KeyEvent.VK_LEFT) {
                 isPlaying = !isPlaying;
             }
         }
@@ -511,12 +519,12 @@ public class GameController extends JFrame {
     public static void main(String[] args) throws IOException, InterruptedException {
         new GameController();
         Grid g = new Grid();
-        
+
         g.CleanScreen();
         System.out.println("Welcome to the mini Snake game.\n");
         System.out.println("Game instructions:\nYou will be provided foods at the several coordinates of the screen which you have to eat.\nEverytime you eat a food the length of the snake will be increased by 1 element and thus the score.\nHere you are provided with three lives. Your life will decrease as you hit the wall or snake's body.\nYou can pause the game in its middle by pressing any key. To continue the paused game press any other key once again\nIf you want to exit press esc.");
         System.out.println("\nPress any key [Other then 'Up', 'Down', 'Left', 'Right', 'ESC'] to play game...");
-        
+
         while (!gameOver) {
             while (isPlaying) {
                 g.resetGrid(game.getFoodCoordinateX(), game.getFoodCoordinateY(), game.getSnakeCoordinateList());
