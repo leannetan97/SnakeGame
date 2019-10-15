@@ -393,7 +393,7 @@ class Record {
         return name;
     }
 
-    public void formatFirstLetterOfWordToUpperCase() {
+    private void formatFirstLetterOfWordToUpperCase() {
         String[] nameArr = name.split(" ");
         name = "";
         for (String element : nameArr) {
@@ -473,11 +473,11 @@ public class GameController extends JFrame {
         game.setSnakeDirection(direction);
     }
 
-    public static void viewRecord() {
+    private static void viewRecord() {
         record.readFromFile();
     }
 
-    public static void saveRecord() {
+    private static void saveRecord() {
         record.writeToFile();
     }
 
